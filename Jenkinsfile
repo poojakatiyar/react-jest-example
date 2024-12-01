@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define NodeJS version as v18.19.1 (or the name of the NodeJS installation in Jenkins)
-        NODEJS_HOME = tool name: 'NodeJS 18.19.1', type: 'NodeJSInstallation'
+        NODEJS_HOME = tool name: 'nodejs', type: 'NodeJSInstallation'
     }
 
     stages {
