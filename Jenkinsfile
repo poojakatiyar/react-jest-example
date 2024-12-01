@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // Define NodeJS version as v18.19.1 (or the name of the NodeJS installation in Jenkins)
+        // Use the exact name of the Node.js installation in Jenkins
         NODEJS_HOME = tool name: 'nodejs', type: 'NodeJSInstallation'
     }
 
