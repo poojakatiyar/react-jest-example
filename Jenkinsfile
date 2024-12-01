@@ -13,6 +13,18 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/poojakatiyar/react-jest-example.git'
             }
         }
+
+        stage('Check Node.js Version') {
+            steps {
+                script {
+                    sh '''#!/bin/bash
+                        node -v
+                        npm -v
+                    '''
+                }
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 script {
