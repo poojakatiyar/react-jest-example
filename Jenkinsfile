@@ -2,21 +2,36 @@ pipeline {
     agent any
 
     environment {
-        // Use the exact name of the Node.js installation in Jenkins
-        NODEJS_HOME = tool name: 'nodejs', type: 'NodeJSInstallation'
+        // Use the NodeJS installation configured in Jenkins
+        NODEJS_HOME = tool name: 'nodejs', type: 'NodeJS installations'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the latest code from the GitHub repository
+                // Checkout the latest code from the GitHub repository 
                 git branch: 'master', url: 'https://github.com/poojakatiyar/react-jest-example.git'
+            }
+        }
+
+        stage('Setup Node.js with NVM') {
+            steps {
+                script {
+                    // Source NVM and use Node.js v18.19.1
+                    sh '''
+                        export NVM_DIR=$HOME/.nvm
+                        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+                        nvm install 18.19.1 || echo "Node.js v18.19.1 is already installed"
+                        nvm use 18.19.1
+                    '''
+                }
             }
         }
 
         stage('Check Node.js Version') {
             steps {
                 script {
+                    // Check the Node.js and npm versions to verify proper setup
                     sh '''#!/bin/bash
                         node -v
                         npm -v
@@ -35,6 +50,7 @@ pipeline {
                 }
             }
         }
+
         stage('Run Tests') {
             steps {
                 script {
