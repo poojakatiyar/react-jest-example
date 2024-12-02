@@ -2,8 +2,10 @@ pipeline {
     agent any
 
     environment {
-        // Set the NVM directory path
+        // Set NVM directory for Node.js management
         NVM_DIR = "/home/pooja/.nvm"
+        // Modify the PATH correctly with Jenkins' PATH+EXTRA syntax
+        PATH+EXTRA = "/home/pooja/.nvm/versions/node/v18.19.1/bin"
     }
 
     stages {
@@ -17,7 +19,7 @@ pipeline {
         stage('Setup Node.js with NVM') {
             steps {
                 script {
-                    // Source NVM and use Node.js v18.19.1
+                    // Load NVM and set Node.js version to v18.19.1
                     sh '''
                         export NVM_DIR=$HOME/.nvm
                         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -31,7 +33,7 @@ pipeline {
         stage('Check Node.js Version') {
             steps {
                 script {
-                    // Check the Node.js and npm versions to verify proper setup
+                    // Check Node.js and npm versions to ensure they are correct
                     sh '''
                         node -v
                         npm -v
@@ -43,7 +45,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Install the Node.js dependencies (React, Jest, etc.)
+                    // Install Node.js dependencies (e.g., React, Jest, etc.)
                     sh '''
                         npm install
                     '''
