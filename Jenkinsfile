@@ -4,8 +4,6 @@ pipeline {
     environment {
         // Set NVM directory for Node.js management
         NVM_DIR = "/home/pooja/.nvm"
-        // Modify the PATH correctly with Jenkins' PATH+EXTRA syntax
-        PATH+EXTRA = "/home/pooja/.nvm/versions/node/v18.19.1/bin"
     }
 
     stages {
