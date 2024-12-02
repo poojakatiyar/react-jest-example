@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        // Use the NodeJS installation configured in Jenkins
-        NODEJS_HOME = tool name: 'nodejs', type: 'NodeJS installations'
+        // Set the NVM directory path
+        NVM_DIR = "/home/pooja/.nvm"
     }
 
     stages {
@@ -20,7 +20,7 @@ pipeline {
                     // Source NVM and use Node.js v18.19.1
                     sh '''
                         export NVM_DIR=$HOME/.nvm
-                        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
                         nvm install 18.19.1 || echo "Node.js v18.19.1 is already installed"
                         nvm use 18.19.1
                     '''
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     // Check the Node.js and npm versions to verify proper setup
-                    sh '''#!/bin/bash
+                    sh '''
                         node -v
                         npm -v
                     '''
@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     // Install the Node.js dependencies (React, Jest, etc.)
-                    sh '''#!/bin/bash
+                    sh '''
                         npm install
                     '''
                 }
@@ -55,7 +55,7 @@ pipeline {
             steps {
                 script {
                     // Run Jest tests
-                    sh '''#!/bin/bash
+                    sh '''
                         npm test -- --ci --runInBand
                     '''
                 }
