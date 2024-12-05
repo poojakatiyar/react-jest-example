@@ -4,8 +4,8 @@ pipeline {
     environment {
         // Set NVM directory for Node.js management
         NVM_DIR = "/home/pooja/.nvm"
-        // Append NVM's Node.js bin directory to PATH
-        PATH = "${NVM_DIR}/versions/node/v18.19.1/bin:${env.PATH}"
+        // Append NVM's Node.js bin directory to PATH using PATH+EXTRA
+        PATH+EXTRA = "${NVM_DIR}/versions/node/v18.19.1/bin"
     }
 
     stages {
