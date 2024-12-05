@@ -4,9 +4,6 @@ pipeline {
     environment {
         // Set NVM directory for Node.js management
         NVM_DIR = "/home/pooja/.nvm"
-        // Append NVM's Node.js bin directory to PATH
-        //PATH = "${NVM_DIR}/versions/node/v18.19.1/bin:${env.PATH}"
-        PATH+EXTRA = "${NVM_DIR}/versions/node/v18.19.1/bin"
     }
 
     stages {
@@ -34,11 +31,14 @@ pipeline {
         stage('Check Node.js Version') {
             steps {
                 script {
-                    // Check Node.js and npm versions to ensure they are correct
-                    sh '''
-                        node -v
-                        npm -v
-                    '''
+                    // Use withEnv to modify PATH
+                    withEnv(["PATH=${env.NVM_DIR}/versions/node/v18.19.1/bin:${env.PATH}"]) {
+                        // Check Node.js and npm versions to ensure they are correct
+                        sh '''
+                            node -v
+                            npm -v
+                        '''
+                    }
                 }
             }
         }
@@ -46,10 +46,13 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Install Node.js dependencies (e.g., React, Jest, etc.)
-                    sh '''
-                        npm install
-                    '''
+                    // Use withEnv to modify PATH
+                    withEnv(["PATH=${env.NVM_DIR}/versions/node/v18.19.1/bin:${env.PATH}"]) {
+                        // Install Node.js dependencies (e.g., React, Jest, etc.)
+                        sh '''
+                            npm install
+                        '''
+                    }
                 }
             }
         }
@@ -57,10 +60,13 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // Run Jest tests
-                    sh '''
-                        npm test -- --ci --runInBand
-                    '''
+                    // Use withEnv to modify PATH
+                    withEnv(["PATH=${env.NVM_DIR}/versions/node/v18.19.1/bin:${env.PATH}"]) {
+                        // Run Jest tests
+                        sh '''
+                            npm test -- --ci --runInBand
+                        '''
+                    }
                 }
             }
         }
