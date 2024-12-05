@@ -11,9 +11,14 @@ pipeline {
             steps {
                 // Checkout the latest code from the GitHub repository 
                 git branch: 'master', url: 'https://github.com/poojakatiyar/react-jest-example.git'
+                sh """
+                # Print the Node.js version
+                echo "Node.js Version:"
+                node -v
+                """
             }
         }
-
+        
         stage('Setup Node.js with NVM') {
             steps {
                 script {
